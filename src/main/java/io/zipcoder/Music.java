@@ -8,31 +8,29 @@ public class Music {
         this.playList = playList;
     }
 
-    public Integer selection(Integer startIndex, String selection){
-        int goUp = 0;
-        int goDown = 0;
+    public Integer selection(Integer startIndex, String selection) {
+        int goUp = 1;
+        int goDown = 1;
 
-        for (int i = startIndex; i < playList.length; i++) {
-            if (!(playList[i % playList.length].equals(selection))){
+        for (int i = 1; i < playList.length; i++) {
+            if (!(playList[(startIndex + i) % playList.length].equals(selection))) {
                 goUp++;
-            }
-            else{
+            } else {
                 break;
             }
+            if (!(playList[((startIndex - i) + playList.length) % playList.length].equals(selection))) {
+                    goDown++;
+                }
+                else {
+                    break;
+                }
+            }
+
+            if (goUp > goDown) {
+                return goDown;
+            }
+
+            return goUp;
         }
 
-        for (int i = startIndex; i >= 0; i--) {
-            if (!(playList[i % playList.length].equals(selection))){
-                goDown++;
-            }
-            else{
-                break;
-            }
-        }
-        if (goUp > goDown){
-            return goDown;
-        }
-
-        return goUp;
-    }
 }
